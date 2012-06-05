@@ -1,0 +1,4 @@
+FAMasTC
+=======
+
+Functor-Applicative-Monad
