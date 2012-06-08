@@ -4,8 +4,8 @@
 
  ****************************************************************)
 
-Require Import Util.
-Require Export TypeModifier.
+Require Import "./Util".
+Require Export "./TypeModifier".
 
 Set Implicit Arguments.
 

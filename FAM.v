@@ -5,10 +5,10 @@
 
  ****************************************************************)
 
-Require Import Util.
-Require Import FunctorDef.
-Require Import ApplicativeDef.
-Require Import MonadDef.
+Require Import "./Util".
+Require Import "./FunctorDef".
+Require Import "./ApplicativeDef".
+Require Import "./MonadDef".
 
 Set Implicit Arguments.
 
