@@ -12,7 +12,7 @@ Set Implicit Arguments.
 Module Functor.
   Section FunctorDef.
   
-    Variable T: TypeModifier.
+    Context (T: TypeModifier).
     
     Class Functor :=
       {

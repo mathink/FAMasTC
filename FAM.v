@@ -5,6 +5,8 @@
 
  ****************************************************************)
 
+Add LoadPath "." as FAM.
+
 Require Import "./Util".
 Require Import "./FunctorDef".
 Require Import "./ApplicativeDef".
@@ -17,18 +19,16 @@ Section FAM.
   Import Applicative.
   Import Monad.
 
-  Variable T: TypeModifier.
-
-  Program Instance ApplicativeFunctor (ap: Applicative T): Functor T :=
+  Program Instance ApplicativeFunctor `(ap: Applicative): Functor T:=
     {
       fmap A B f x := [f | x]
     }.
   Next Obligation.
-    intros ap A x.
+    intros T ap A x.
     apply pure_identity.
   Qed.
   Next Obligation.
-    intros ap A B C f g x.
+    intros T ap A B C f g x.
     unfold compose.
     eapply Transitivity; [| apply pure_composition].
     eapply Transitivity.
@@ -49,13 +49,13 @@ Section FAM.
   Qed.
 
 
-  Program Instance MonadApplicative (mon: Monad T): Applicative T :=
+  Program Instance MonadApplicative `(mon: Monad): Applicative T :=
     {
       pure A a := ret a;
       flift A B mf ma := a <- ma; f <- mf; ^|(f a)
     }.
   Next Obligation.
-    intros mon A u.
+    intros T mon A u.
     eapply Transitivity; [apply bind_f_subst; intro |].
      eapply Transitivity; [apply unit_left |].
      unfold id.
@@ -64,7 +64,7 @@ Section FAM.
      apply unit_right.
   Qed.
   Next Obligation.
-    intros mon A B C u v w.
+    intros T mon A B C u v w.
     rewrite_assoc_inv_r.
     simpl.
     apply bind_f_subst; intro a.
@@ -90,13 +90,13 @@ Section FAM.
     apply Reflexivity.
   Qed.
   Next Obligation.
-    intros mon A B f x.
+    intros T mon A B f x.
     eapply Transitivity; [apply unit_left |].
     eapply Transitivity; [apply unit_left |].
     apply Reflexivity.
   Qed.
   Next Obligation.
-    intros mon A B u x.
+    intros T mon A B u x.
     eapply Transitivity; [apply unit_left |].
     apply bind_f_subst; intro f.
     apply Symmetry.
@@ -105,22 +105,22 @@ Section FAM.
     apply Reflexivity.
   Qed.
   Next Obligation.
-    intros mon A B u v m Heq.
+    intros T mon A B u v m Heq.
     apply bind_f_subst; intro.
     apply (bind_m_subst _ _ _ _ Heq).
   Qed.
   Next Obligation.
-    intros mon A B u m n Heq.
+    intros T mon A B u m n Heq.
     apply (bind_m_subst _ _ _ _ Heq).
   Qed.
   
   
-  Program Instance MonadFunctor (monad: Monad T): Functor T :=
+  Program Instance MonadFunctor `(monad: Monad): Functor T :=
     {
       fmap A B f x := a <- x; ret (f a)
     }.
   Next Obligation.
-    intros mon A x.
+    intros T mon A x.
     unfold id.
     eapply Transitivity; [apply bind_f_subst; intro |].
      apply Reflexivity.
@@ -128,7 +128,7 @@ Section FAM.
      apply unit_right.
   Qed.
   Next Obligation.
-    intros mon A B C f g x.
+    intros T mon A B C f g x.
     unfold compose.
     rewrite_assoc_inv_r.
     simpl.
@@ -141,12 +141,12 @@ Section FAM.
   Qed.
 
 
-  Program Instance MonadApplicativeFunctor (monad: Monad T): Functor T :=
+  Program Instance MonadApplicativeFunctor `(monad: Monad): Functor T :=
     ApplicativeFunctor (MonadApplicative monad).
 
 
   Lemma MF_MAF_equiv:
-    forall (monad: Monad T){A B: Set}(f: A -> B)(m: T A),
+    forall `(monad: Monad){A B: Set}(f: A -> B)(m: T A),
       fmap (Functor:=MonadFunctor monad) f m =t= fmap (Functor:=MonadApplicativeFunctor monad) f m.
   Proof.
     unfold fmap.

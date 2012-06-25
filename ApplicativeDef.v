@@ -12,7 +12,7 @@ Set Implicit Arguments.
 Module Applicative.
   Section ApplicativeDef.
   
-    Variable T: TypeModifier.
+    Context (T: TypeModifier).
     
     Reserved Notation "A (#) B" (at level 50, left associativity).
     Class Applicative :=

@@ -4,7 +4,7 @@
 
  ****************************************************************)
 
-Require Export "./RelationClasses".
+Require Export "./Relations".
 Export Relation.
 
 Set Implicit Arguments.

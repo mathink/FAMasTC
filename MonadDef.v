@@ -12,7 +12,7 @@ Set Implicit Arguments.
 Module Monad.
   Section MonadDef.
   
-    Variable T: TypeModifier.
+    Context (T: TypeModifier).
 
     Reserved Notation "x >>= y" (at level 60, no associativity).
     Class Monad :=
