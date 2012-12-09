@@ -4,6 +4,8 @@
 
  ****************************************************************)
 
+Add LoadPath "." as FAM.
+
 Require Import "./Util".
 Require Export "./TypeModifier".
 
@@ -39,8 +41,8 @@ Module Monad.
             m >>= f =t= m' >>= f'
       }.
 
-    Implicit Arguments ret [Monad [A]].
-    Implicit Arguments bind [Monad A B].
+    Implicit Arguments ret [[Monad] [A]].
+    Implicit Arguments bind [[Monad] [A] [B]].
 
   End MonadDef.
 
@@ -71,6 +73,7 @@ Module Monad.
     eapply Transitivity; [| apply Symmetry; apply assoc].
 
 End Monad.
+
 
 Section MonadProp.
   Import Monad.
@@ -133,3 +136,15 @@ Section MonadProp.
   Qed.
 
 End MonadProp.
+
+
+
+Import Monad.
+Implicit Arguments ret [[T] [Monad] [A]].
+Implicit Arguments bind [[T] [Monad] [A] [B]].
+
+
+
+
+
+

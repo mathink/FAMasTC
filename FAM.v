@@ -19,7 +19,7 @@ Section FAM.
   Import Applicative.
   Import Monad.
 
-  Program Instance ApplicativeFunctor `(ap: Applicative): Functor T:=
+  Program Instance ApplicativeFunctor `(ap: Applicative): Functor T :=
     {
       fmap A B f x := [f | x]
     }.
@@ -134,7 +134,9 @@ Section FAM.
     simpl.
     apply Symmetry.
     eapply Transitivity; [apply bind_f_subst; intro |].
+    eapply Transitivity.
      apply unit_left.
+     apply Reflexivity.
    
      simpl.
      apply Reflexivity.
